@@ -2,8 +2,8 @@
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
-  config.vm.box = "base"
-  config.vm.box_url = "https://dl.dropboxusercontent.com/u/197673519/debian-7.2.0.box"
+  config.vm.box = "debian-wheezy-64"
+  config.vm.box_url = "http://download.obm.org/debian-wheezy-64.box"
   config.vm.hostname = "obmvagrant"
   config.vm.provision "ansible" do |ansible|
     ansible.playbook = "obm.yml"
