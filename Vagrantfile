@@ -11,8 +11,8 @@ Vagrant.configure("2") do |config|
       ansible.playbook = "Debian/obm.yml"
       ansible.verbose = "extra"
     end
-# debian.vm.network is needed if you access the virtual machine on eth1
-#    debian.vm.network :public_network, :bridge => 'eth1'
+#  debian.vm.network is needed if you access the virtual machine on eth1
+    debian.vm.network :public_network, :bridge => 'eth1'
   end
 
   config.vm.define "centos", primary: true do |centos|
@@ -26,7 +26,7 @@ Vagrant.configure("2") do |config|
     centos.vm.provider "virtualbox" do |vb|
       vb.customize ["modifyvm", :id, "--memory", "1024"]
     end
-# debian.vm.network is needed if you access the virtual machine on eth1
-#    centos.vm.network :public_network, :bridge => 'eth1'
+#    centos.vm.network is needed if you access the virtual machine on eth1
+    centos.vm.network :public_network, :bridge => 'eth1'
   end
 end
