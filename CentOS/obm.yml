@@ -15,14 +15,18 @@
 ### OpenJDK
     - name: install required packages OpenJDK 1.6
       yum: pkg=java-1.6.0-openjdk-devel state=installed
-      with_items: ["java-1.6.0-openjdk-devel", "expect"]
+#      with_items: ["java-1.6.0-openjdk-devel", "expect"]
 
     - name: install required packages expect
       yum: pkg=expect state=installed
 
+### Install wget
+    - name: Install wget needed for downloading jdk-6u35
+      yum: pkg=wget state=installed
+
 ### JDK
-    - name: copy jdk-6u35-linux-x64-rpm.bin in /tmp
-      copy: src=jdk/jdk-6u35-linux-x64-rpm.bin dest=/tmp/jdk-6u35-linux-x64-rpm.bin
+    - name: wget jdk-6u35-linux-x64-rpm.bin from obm.org
+      command: wget http://download.obm.org/jdk-6u35-linux-x64-rpm.bin --directory-prefix=/tmp
 
     - name: copy install-jdk-6u35.expect in /tmp
       copy: src=install-jdk-6u35.expect dest=/tmp/install-jdk-6u35.expect
