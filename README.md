@@ -24,6 +24,5 @@ You can then connect to it at `https://<youripaddress>/`
 What do you get ?
 ========================
 
-* a Debian Wheezy 64 bits or a CentOS 6 64 bits
-* OBM 2.6 preview version
-
+* a Debian Wheezy 64 bits (with OBM 2.6 preview version) or a CentOS 6 64 bits
+(with 2.5 stable version)
