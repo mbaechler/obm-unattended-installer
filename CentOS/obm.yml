@@ -1,0 +1,61 @@
+---
+
+- hosts: all
+  sudo: True
+  user: vagrant
+
+  tasks:
+### EPEL REPO
+    - name: get epel repo
+      get_url: dest=/tmp/epel-release.rpm  url=http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+
+    - name: install epel repo rpm
+      yum: pkg=/tmp/epel-release.rpm state=installed
+
+### OpenJDK
+    - name: install required packages OpenJDK 1.6
+      yum: pkg=java-1.6.0-openjdk-devel state=installed
+      with_items: ["java-1.6.0-openjdk-devel", "expect"]
+
+    - name: install required packages expect
+      yum: pkg=expect state=installed
+
+### JDK
+    - name: copy jdk-6u35-linux-x64-rpm.bin in /tmp
+      copy: src=jdk/jdk-6u35-linux-x64-rpm.bin dest=/tmp/jdk-6u35-linux-x64-rpm.bin
+
+    - name: copy install-jdk-6u35.expect in /tmp
+      copy: src=install-jdk-6u35.expect dest=/tmp/install-jdk-6u35.expect
+
+    - name: Install Oracle jdk 6u35
+      command: /usr/bin/expect /tmp/install-jdk-6u35.expect
+
+### Execute all alternatives with a script
+    - name: Execute alternatives
+      script: alternatives-execution.sh
+
+#    - name: Test java version installed
+#      command: java -version | grep 1.6.0_35
+#      register: output
+
+### Install OBM
+    - name: Install OBM repo
+      command: rpm -U --force http://packages.obm.org/rpm/25/release/obm-release.noarch.rpm
+
+    - name: Install obm-PostgreSQL
+      command: yum -y install obm-PostgreSQL
+
+    - name: Install obm-full
+      command: yum -y install obm-full
+
+    - name: Copy expect script for obm-admin
+      copy: src=obm-admin.expect dest=/tmp/obm-admin.expect
+
+### obm-admin
+    - name: Configure obm-admin
+      shell: /usr/bin/expect -d /tmp/obm-admin.expect > /var/log/expect-obm-admin.log 2>&1
+
+### Final configuration executed in a script
+    - name: Restarting Jetty, Activating services on boot, System Configuration Tweaks in one script
+      script: final-configuration.sh
+

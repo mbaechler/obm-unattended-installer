@@ -1,0 +1,66 @@
+spawn obm-admin
+# ================= OBM main configuration ==================
+expect "Please enter external url (IP):"
+send "obm-CentOS7-vagrant\r"
+expect "Plese enter LDAP server name :"
+send "127.0.0.1\r"
+expect "Enable module LDAP, (y)es (n)o :"
+send "y\r"
+expect "Enable module MAIL, (y)es (n)o :"
+send "y\r"
+expect "Enable module SAMBA, (y)es (n)o :"
+send "n\r"
+expect "Enable module WEB, (y)es (n)o :"
+send "n\r"
+# =============== OBM DataBase configuration ================
+expect "Please enter the DataBase hostname:"
+send "localhost\r"
+expect "Please enter the DataBase type (MYSQL/PGSQL):"
+send "PGSQL\r"
+expect "Enter the DataBase name:"
+send "obm\r"
+expect "Enter the DataBase user:"
+send "obm\r"
+expect "Enter the DataBase user password:"
+send "obm\r"
+# =============== OBM DataBase initialisation ================
+set timeout 240
+# ================= OBM system user configuration ==================
+expect "Enter the root ldap password \\\[mdp3PaAl\\\]"
+send "mdp3PaAl\r"
+expect "Enter the cyrus administrator password \\\[cyrus\\\]"
+send "cyrus\r"
+expect "Enter the Samba user password \\\[m#Pa!NtA\\\]"
+send "m#Pa!NtA\r"
+expect "Do you want to add a LDAP syncrepl user? (y)es,(n)o \\\[n\\\]"
+send "n\r"
+# ================= OBM UI  configuration ==================
+expect "Choose the type of authentication: (database/ldap) \\\[database\\\]"
+send "database\r"
+expect "Do you want to replace it? (y)es,(n)o ?"
+send "y\r"
+expect "what is the IP adress of the OBM-TOMCAT server (obm-sync, funambol) ?"
+send "localhost\r"
+expect "what is the IP adress of the OPUSH server ?"
+send "localhost\r"
+expect "Do you want to replace it? (y)es, (n)o \\\[n\\\]"
+send "y\r"
+expect "Do you want to activate syncrepl for this LDAP? (y)es, (n)o: \\\[n\\\]"
+send "n\r"
+expect "Do you want to activate SSL/TLS in LDAP ? (y)es,(n)o \\\[n\\\]"
+send "n\r"
+# ================= OBM Cyrus configuration ==================
+expect "Do you want replace configuration ? (y)es,(n)o"
+send "y\r"
+set timeout 240
+# ================= OBM postfix configuration ==================
+# file /etc/postfix/main.cf already exist
+expect "do you want replace this file? (y)es,(n)o ? \\\[n\\\]"
+send "y\r"
+expect "Please enter your relay host if you have it"
+send "\r\n\r\n"
+expect "(default empty)"
+send "\r\n"
+set timeout 15
+expect eof
+exit 0

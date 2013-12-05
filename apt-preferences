@@ -1,3 +1,0 @@
-#Acquire::http {
-# Proxy "http://apt-proxy.lyon.lan:3142";
-#};
