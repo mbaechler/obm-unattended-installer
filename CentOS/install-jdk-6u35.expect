@@ -1,0 +1,5 @@
+set timeout 60
+spawn sh /tmp/jdk-6u35-linux-x64-rpm.bin
+expect "Press Enter to continue....."
+send "\r"
+expect eof

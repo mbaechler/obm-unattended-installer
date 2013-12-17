@@ -1,0 +1,4 @@
+spawn java -version
+expect "Press Enter to continue....."
+send "\r"
+expect eof
