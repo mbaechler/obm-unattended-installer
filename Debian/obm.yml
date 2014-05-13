@@ -1,15 +1,13 @@
 ---
 
 - hosts: all
-  sudo: True
-  user: vagrant
 
   tasks:
-    - name: configure apt-proxy
-      copy: src=apt-preferences dest=/etc/apt/apt.conf owner=root group=root mode=644
-
     - name: install needed tools
-      apt: pkg=python-software-properties
+      apt: pkg={{item}}
+      with_items:
+        - python-software-properties
+        - wget
 
     - name: download obm.org gpg key
       action: command /usr/bin/wget -q  http://deb.obm.org/obmgpg.pub
@@ -18,7 +16,7 @@
       action: command /usr/bin/apt-key add obmgpg.pub
 
     - name: add obm repository
-      apt_repository: repo='deb http://deb.obm.org/26/next obm obm' state=present
+      apt_repository: repo='deb http://deb.obm.org/30/next obm obm' state=present
     - name: remove exim
       action: command /usr/bin/apt-get remove -y exim4 exim4-config
 
@@ -29,6 +27,6 @@
       action: command debconf-set-selections /tmp/debconf
 
     - name: install obm
-      action: command /usr/bin/aptitude install -y obm
+      action: command /usr/bin/apt-get install -y obm obm-sync
 
 
